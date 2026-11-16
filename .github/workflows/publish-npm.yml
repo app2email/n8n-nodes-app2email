@@ -1,0 +1,24 @@
+# Builds, lints and publishes n8n-nodes-app2email to npm with provenance when a v* tag is pushed
+# (n8n's verified community nodes must be published from GitHub Actions with provenance).
+# Needs npm trusted publishing for the package (npm > package > Settings > Trusted publishing > GitHub Actions:
+# repository app2email/n8n-nodes-app2email, workflow publish-npm.yml).
+name: publish-npm
+on:
+  push:
+    tags: ['v*']
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - run: npm install --no-audit --no-fund
+      - run: npm run build
+      - run: npm run lint
+      - run: npm publish --access public --provenance

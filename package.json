@@ -1,0 +1,54 @@
+{
+	"name": "n8n-nodes-app2email",
+	"version": "0.2.0",
+	"description": "n8n community nodes for app2email: send and read WhatsApp messages, contacts, broadcasts and templates, and trigger workflows from app2email webhooks.",
+	"keywords": [
+		"n8n-community-node-package",
+		"n8n",
+		"app2email",
+		"whatsapp",
+		"whatsapp-business"
+	],
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/app2email/n8n-nodes-app2email"
+	},
+	"homepage": "https://www.app2email.com",
+	"author": {
+		"name": "app2email",
+		"email": "support@app2email.com"
+	},
+	"files": [
+		"dist"
+	],
+	"main": "dist/nodes/App2email/App2email.node.js",
+	"scripts": {
+		"build": "tsc && node -e \"require('fs').copyFileSync('nodes/App2email/app2email.svg','dist/nodes/App2email/app2email.svg')\"",
+		"clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+		"lint": "eslint nodes credentials --ext .ts",
+		"lintfix": "eslint nodes credentials --ext .ts --fix",
+		"prepublishOnly": "npm run build && npm run lint"
+	},
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"credentials": [
+			"dist/credentials/App2emailApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/App2email/App2email.node.js",
+			"dist/nodes/App2email/App2emailTrigger.node.js"
+		]
+	},
+	"devDependencies": {
+		"@types/node": "^20.11.0",
+		"@typescript-eslint/parser": "^7.15.0",
+		"eslint": "^8.57.0",
+		"eslint-plugin-n8n-nodes-base": "^1.16.1",
+		"n8n-workflow": "^1.60.0",
+		"typescript": "^5.4.0"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
+}
